@@ -5,7 +5,10 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../s
 
 from drink import Drink
 from order import Order
-
+"""
+Tests for the Order class to make sure drinks can be added, removed,
+and that totals and receipts work as expected.
+"""
 # this test checks if the Order class is working as expected
 def test_add_item():
     o = Order()

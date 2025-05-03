@@ -1,31 +1,43 @@
 from drink import Drink
-# Cinos Drive-Up Beverage Service
-# This class manages the order of drinks, allowing items to be added or removed.
+
 class Order:
+    """
+    This class is like a shopping cart. It keeps track of all the drinks someone orders.
+    Each drink has an ID number so we can add or remove them easily and print a full receipt.
+    """
     def __init__(self):
-        # Start with an empty order
+        # We start with no drinks, and the first ID will be 1
         self.__items = {}
         self.__next_id = 1
 
     def get_items(self):
+        """Returns all the drinks currently in the order."""
         return dict(self.__items)
 
     def get_total(self):
+        """Each drink is $3.50 — this tells us the total price for all of them."""
         return len(self.__items) * 3.50
 
     def get_num_items(self):
+        """Tells us how many total drinks are in this order."""
         return len(self.__items)
-    
-        # Get the total number of items in the order
+
     def get_receipt(self):
-        receipt = "\n--- Cinos Receipt ---\n"
+        """
+        Builds a little receipt showing each drink and its flavors, and the total cost at the bottom.
+        """
+        receipt = "--- Cinos Receipt ---"
         for drink_id, drink in self.__items.items():
-            receipt += f"Drink #{drink_id}: {drink.get_drink_base()} with {', '.join(drink.get_drink_flavors())}\n"
-        receipt += f"Total: ${self.get_total():.2f}\n"
+            # List each drink’s base and flavors
+            receipt += f"Drink #{drink_id}: {drink.get_drink_base()} with {', '.join(drink.get_drink_flavors())}"
+
+        receipt += f"Total: ${self.get_total():.2f}"
         return receipt
 
     def add_item(self, drink):
-        # Only Drink objects can be added to an order
+        """
+        Adds a drink to the order. Only works if what you're adding is actually a Drink.
+        """
         if isinstance(drink, Drink):
             self.__items[self.__next_id] = drink
             self.__next_id += 1
@@ -33,7 +45,9 @@ class Order:
             raise TypeError("Sorry, you can only add drinks to your order!")
 
     def remove_item(self, drink_id):
-        # Removes a drink by its ID
+        """
+        Lets us delete a drink by its ID number. If you use an ID that doesn’t exist, we’ll get an error.
+        """
         if drink_id in self.__items:
             del self.__items[drink_id]
         else:

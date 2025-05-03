@@ -4,7 +4,7 @@ from order import Order
 # This script simulates a simple beverage ordering system.
 # It allows users to choose drinks and flavors, place an order, and receive a receipt.
 def main():
-    print("Welcome to Cinos Drive-Up Beverage Service! \U0001F6D2\n")
+    print("Welcome to Cinos Drive-Up Beverage Service!")
     print("Available Drinks:")
     print(", ".join(CinosDrinkMenu.drink_options))
 
