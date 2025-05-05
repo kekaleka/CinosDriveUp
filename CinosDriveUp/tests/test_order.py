@@ -2,32 +2,28 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-
 from drink import Drink
 from order import Order
-"""
-Tests for the Order class to make sure drinks can be added, removed,
-and that totals and receipts work as expected.
-"""
-# this test checks if the Order class is working as expected
+
+
 def test_add_item():
-    o = Order()
-    d = Drink("sprite")
-    o.add_item(d)
-    assert o.get_num_items() == 1
-#
+    order = Order()
+    custom_drink = Drink("sprite", "small")
+    order.add_item(custom_drink)
+    assert order.get_num_items() == 1
+
 def test_remove_item():
-    o = Order()
-    d = Drink("fanta")
-    o.add_item(d)
-    item_id = list(o.get_items().keys())[0]
-    o.remove_item(item_id)
-    assert o.get_num_items() == 0
+    order = Order()
+    custom_drink = Drink("fanta", "small")
+    order.add_item(custom_drink)
+    item_id = list(order.get_items().keys())[0]
+    order.remove_item(item_id)
+    assert order.get_num_items() == 0
 
 def test_get_receipt_base():
-    o = Order()
-    d = Drink("soda")
-    d.add_flavor("mint")
-    o.add_item(d)
-    receipt = o.get_receipt()
-    assert "soda" in receipt
+    order = Order()
+    custom_drink = Drink("soda", "small")
+    custom_drink.add_flavor("mint")
+    order.add_item(custom_drink)
+    receipt = order.get_receipt()
+    assert all(word in receipt for word in ["soda", "mint", "small", "Subtotal", "Tax (7.25%)", "Total"])
