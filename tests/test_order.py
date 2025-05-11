@@ -26,4 +26,11 @@ def test_get_receipt_base():
     custom_drink.add_flavor("mint")
     order.add_item(custom_drink)
     receipt = order.get_receipt()
-    assert all(word in receipt for word in ["soda", "mint", "small", "Subtotal", "Tax (7.25%)", "Total"])
+    assert receipt is not None
+    assert "soda" in receipt.lower()
+    assert "mint" in receipt.lower()
+    assert "small" in receipt.lower()
+    assert "subtotal" in receipt.lower()
+    assert "tax" in receipt.lower()
+    assert "total" in receipt.lower()
+

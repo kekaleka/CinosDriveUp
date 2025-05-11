@@ -39,18 +39,21 @@ class Order:
         return sum(item.get_total() for item in self.__items.values())
 
     def get_receipt(self):
-        """Return a formatted string receipt with each item's details, subtotal, tax, and final total."""
-        receipt = "- Cinos Receipt ---"
+        receipt = "\n--- Cinos Receipt ---\n"
         subtotal = 0
         for item_id, item in self.__items.items():
             item_total = item.get_total()
             subtotal += item_total
 
-        if isinstance(item, Drink):
-                receipt += f"Drink #{item_id}: {item.get_drink_base()} ({item.get_size()}) with {', '.join(item.get_drink_flavors())} - ${item_total:.2f}"
-        elif isinstance(item, Food):
-            receipt += f"Food #{item_id}: {item.get_food_name()} with {', '.join(item.get_toppings())} - ${item_total:.2f}"
-            tax = subtotal * 0.0725
-            total = subtotal + tax
-            receipt += f"""Subtotal: ${subtotal:.2f}Tax (7.25%): ${tax:.2f}Total: ${total:.2f}"""
-            return receipt
+            if isinstance(item, Drink):
+                receipt += f"Drink #{item_id}: {item.get_drink_base()} ({item.get_size()}) with {', '.join(item.get_drink_flavors())} - ${item_total:.2f}\n"
+            elif isinstance(item, Food):
+                receipt += f"Food #{item_id}: {item.get_food_name()} with {', '.join(item.get_toppings())} - ${item_total:.2f}\n"
+
+        tax = subtotal * 0.0725
+        total = subtotal + tax
+        receipt += f"\nSubtotal: ${subtotal:.2f}"
+        receipt += f"\nTax (7.25%): ${tax:.2f}"
+        receipt += f"\nTotal: ${total:.2f}\n"
+
+        return receipt  
