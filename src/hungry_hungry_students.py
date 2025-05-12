@@ -12,7 +12,7 @@ class CinosFoodMenu:
         "Nacho Chips": 1.90
     }
 
-    toppings = {
+    food_toppings = {
         "Cherry": 0.00,
         "Whipped Cream": 0.00,
         "Caramel Sauce": 0.50,
