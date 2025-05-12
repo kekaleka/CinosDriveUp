@@ -37,6 +37,7 @@ class Food:
         self.__toppings = []
 
     def get_food_name(self):
+        """Return the name of the food item."""
         return self.__name
 
     def get_toppings(self):

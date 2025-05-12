@@ -1,39 +1,46 @@
-def test_add_flavor():
-    custom_drink = Drink("water", "small")
-    custom_drink.add_flavor("lemon")
-    assert "lemon" in custom_drink.get_drink_flavors()
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-def test_invalid_base():
+from hungry_hungry_students import Food, CinosFoodMenu
+
+# Test creating a valid food item and checking its name and price
+def test_create_food():
+    food = Food("Hotdog")
+    assert food.get_food_name() == "Hotdog"
+    assert food.get_total() == 2.30
+
+# Test creating an invalid food item 
+def test_invalid_food():
     try:
-        Drink("invalid", "small")
-        assert False, "Should have raised ValueError"
+        Food("Pizza")
+        assert False, "Should have raised ValueError for invalid food"
     except ValueError:
         assert True
 
-def test_flavor_price():
-    custom_drink = Drink("juice", "medium")
-    custom_drink.add_flavor("lime")
-    custom_drink.add_flavor("mint")
-    assert custom_drink.get_flavor_price() == 0.30
+# Test adding valid toppings to a food item
+def test_add_toppings():
+    food = Food("French Fries")
+    food.add_topping("Ketchup")
+    food.add_topping("Chili")
+    toppings = food.get_toppings()
+    assert "Ketchup" in toppings
+    assert "Chili" in toppings
+    assert food.get_total() == 1.50 + 0.60  # base + chili (ketchup is $0.00)
 
-def test_total_price():
-    custom_drink = Drink("juice", "medium")
-    custom_drink.add_flavor("lime")
-    custom_drink.add_flavor("mint")
-    expected_total = 1.75 + 0.30
-    assert custom_drink.get_total() == expected_total
+# Test ignoring duplicate toppings
+def test_no_duplicate_toppings():
+    food = Food("Tater Tots")
+    food.add_topping("Bacon Bits")
+    food.add_topping("Bacon Bits")
+    toppings = food.get_toppings()
+    assert toppings.count("Bacon Bits") == 1
 
-def test_add_multiple_flavors():
-    custom_drink = Drink("soda", "large")
-    custom_drink.add_flavor("lemon")
-    custom_drink.add_flavor("cherry")
-    custom_drink.add_flavor("mint")
-    flavors = custom_drink.get_drink_flavors()
-    assert len(flavors) == 3
-    assert set(flavors) == {"lemon", "cherry", "mint"}
-
-def test_set_new_flavors():
-    custom_drink = Drink("iced coffee", "medium")
-    custom_drink.set_new_flavors(["lemon", "mint", "lemon", "banana"])
-    flavors = custom_drink.get_drink_flavors()
-    assert flavors == ["lemon", "mint"]
+# Test that total updates with multiple toppings
+def test_food_total_with_toppings():
+    food = Food("Nacho Chips")
+    food.add_topping("Nacho Cheese")
+    food.add_topping("Chili")
+    food.add_topping("Bacon Bits")
+    expected_total = 1.90 + 0.30 + 0.60 + 0.30
+    assert abs(food.get_total() - expected_total) < 0.01
