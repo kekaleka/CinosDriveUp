@@ -1,6 +1,7 @@
 from drink import Drink, CinosDrinkMenu
 from hungry_hungry_students import Food, CinosFoodMenu
 from order import Order
+from ice_storm import IceCream, CinosDessertMenu
 
 if __name__ == "__main__":
     order = Order()
@@ -92,3 +93,44 @@ if __name__ == "__main__":
         order.add_item(food_item)
         print("Food item added to your order!")
         print(order.get_receipt())
+
+    # Ice cream ordering section
+    while True:
+        print("Available ice cream flavors:")
+        for i, flavor in enumerate(CinosDessertMenu.icecream_flavors, 1):
+            print(f"  {i}. {flavor} - ${CinosDessertMenu.icecream_flavors[flavor]:.2f}")
+        ice_cream_index = input("Choose an ice cream by number (or type 'done' to finish): ").lower()
+        if ice_cream_index == 'done':
+            break
+        if not ice_cream_index.isdigit() or not 1 <= int(ice_cream_index) <= len(CinosDessertMenu.icecream_flavors):
+            print("Invalid ice cream choice. Please enter a valid number.")
+            continue
+        ice_cream_name = list(CinosDessertMenu.icecream_flavors.keys())[int(ice_cream_index) - 1]
+
+        try:
+            ice_cream = IceCream(ice_cream_name)
+        except ValueError as e:
+            print(e)
+            continue
+
+        print("Available toppings:")
+        for i, topping in enumerate(CinosDessertMenu.toppings, 1):
+            print(f"  {i}. {topping} - ${CinosDessertMenu.toppings[topping]:.2f}")
+        while True:
+            topping_index = input("Add a topping by number (or type 'done' when finished): ").lower()
+            if topping_index == 'done':
+                break
+            if not topping_index.isdigit() or not 1 <= int(topping_index) <= len(CinosDessertMenu.toppings):
+                print("Invalid topping choice. Please enter a valid number.")
+                continue
+            topping = list(CinosDessertMenu.toppings.keys())[int(topping_index) - 1]
+            try:
+                ice_cream.add_topping(topping)
+            except ValueError as e:
+                print(e)
+
+        order.add_item(ice_cream)
+        print("Ice cream added to your order!")
+        print(order.get_receipt())
+    print("Thank you for your order! Here's your final receipt:")
+

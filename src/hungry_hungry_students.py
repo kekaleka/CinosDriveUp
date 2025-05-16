@@ -1,6 +1,7 @@
 class CinosFoodMenu:
     """
     This is the main list of food items and prices offered at Cinos.
+
     """
     food_options = {
         "Hotdog": 2.30,
@@ -36,10 +37,11 @@ class Food:
         self.__price = CinosFoodMenu.food_options[name]
         self.__toppings = []
 
+    
     def get_food_name(self):
         """Return the name of the food item."""
         return self.__name
-
+    
     def get_toppings(self):
         """Return a list of all toppings added to the food item."""
         return list(self.__toppings)
@@ -57,3 +59,8 @@ class Food:
 
     def get_total(self):
         return self.__price + self.get_topping_price()
+    
+    def __str__(self):
+        """Return a string representation of the food item with toppings and total price."""
+        toppings_str = ', '.join(self.__toppings) if self.__toppings else "No toppings"
+        return f"{self.__name} with {toppings_str} - ${self.get_total():.2f}"

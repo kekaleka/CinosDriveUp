@@ -1,5 +1,6 @@
 from drink import Drink
 from hungry_hungry_students import Food
+from ice_storm import IceCream
 
 
 class Order:
@@ -13,11 +14,11 @@ class Order:
 
     def add_item(self, item):
         """Add a Drink or Food object to the order. Each item gets a unique ID."""
-        if isinstance(item, (Drink, Food)):
+        if isinstance(item, (Drink, Food, IceCream)):
             self.__items[self.__order_counter_id] = item
             self.__order_counter_id += 1
         else:
-            raise TypeError("Only Drink or Food objects can be added to the order.")
+            raise TypeError("Only Drink, Food or Icecream items can be added to the order.")
 
     def remove_item(self, item_id):
         """Remove an item from the order using its ID number."""
@@ -49,6 +50,9 @@ class Order:
                 receipt += f"Drink #{item_id}: {item.get_drink_base()} ({item.get_size()}) with {', '.join(item.get_drink_flavors())} - ${item_total:.2f}\n"
             elif isinstance(item, Food):
                 receipt += f"Food #{item_id}: {item.get_food_name()} with {', '.join(item.get_toppings())} - ${item_total:.2f}\n"
+            else:
+                receipt += f"Ice Cream #{item_id}: {item.get_icecream_name()} with {', '.join(item.get_toppings())} - ${item_total:.2f}\n"
+        
 
         tax = subtotal * 0.0725
         total = subtotal + tax

@@ -1,8 +1,9 @@
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+assert os.path.exists(os.path.join(os.path.dirname(__file__), '../src/hungry_hungry_students.py')), "Module not found: hungry_hungry_students"
 
-from hungry_hungry_students import Food, CinosFoodMenu
+from hungry_hungry_students import Food
 
 # Test creating a valid food item and checking its name and price
 def test_create_food():

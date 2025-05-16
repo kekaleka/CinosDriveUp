@@ -79,3 +79,8 @@ class Drink:
             raise ValueError(f"Sorry, '{flavor}' is not an available flavor. Please choose from {CinosDrinkMenu.drink_flavors}.")
         if flavor not in self.__flavors:
             self.__flavors.append(flavor)
+
+    def __str__(self):
+        """Return a string representation of the drink."""
+        flavor_list = ', '.join(self.__flavors) if self.__flavors else "No flavors added"
+        return f"Drink: {self.__base} ({self.__size}) with flavors: {flavor_list}"
